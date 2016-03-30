@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.su.timetask.mapper.TotalRouteMapper" >
+  <resultMap id="BaseResultMap" type="com.su.timetask.dao.domain.TotalRoute" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="Routenum" property="routenum" jdbcType="VARCHAR" />
+    <result column="Route_id" property="routeId" jdbcType="INTEGER" />
+    <result column="Startnode" property="startnode" jdbcType="VARCHAR" />
+    <result column="Acrossnode" property="acrossnode" jdbcType="VARCHAR" />
+    <result column="Endpoint" property="endpoint" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, Routenum, Route_id, Startnode, Acrossnode, Endpoint
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_totalrouteform
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_totalrouteform
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.su.timetask.dao.domain.TotalRoute" >
+    insert into t_totalrouteform (id, Routenum, Route_id, 
+      Startnode, Acrossnode, Endpoint
+      )
+    values (#{id,jdbcType=INTEGER}, #{routenum,jdbcType=VARCHAR}, #{routeId,jdbcType=INTEGER}, 
+      #{startnode,jdbcType=VARCHAR}, #{acrossnode,jdbcType=VARCHAR}, #{endpoint,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.su.timetask.dao.domain.TotalRoute" >
+    insert into t_totalrouteform
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="routenum != null" >
+        Routenum,
+      </if>
+      <if test="routeId != null" >
+        Route_id,
+      </if>
+      <if test="startnode != null" >
+        Startnode,
+      </if>
+      <if test="acrossnode != null" >
+        Acrossnode,
+      </if>
+      <if test="endpoint != null" >
+        Endpoint,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="routenum != null" >
+        #{routenum,jdbcType=VARCHAR},
+      </if>
+      <if test="routeId != null" >
+        #{routeId,jdbcType=INTEGER},
+      </if>
+      <if test="startnode != null" >
+        #{startnode,jdbcType=VARCHAR},
+      </if>
+      <if test="acrossnode != null" >
+        #{acrossnode,jdbcType=VARCHAR},
+      </if>
+      <if test="endpoint != null" >
+        #{endpoint,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.su.timetask.dao.domain.TotalRoute" >
+    update t_totalrouteform
+    <set >
+      <if test="routenum != null" >
+        Routenum = #{routenum,jdbcType=VARCHAR},
+      </if>
+      <if test="routeId != null" >
+        Route_id = #{routeId,jdbcType=INTEGER},
+      </if>
+      <if test="startnode != null" >
+        Startnode = #{startnode,jdbcType=VARCHAR},
+      </if>
+      <if test="acrossnode != null" >
+        Acrossnode = #{acrossnode,jdbcType=VARCHAR},
+      </if>
+      <if test="endpoint != null" >
+        Endpoint = #{endpoint,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.su.timetask.dao.domain.TotalRoute" >
+    update t_totalrouteform
+    set Routenum = #{routenum,jdbcType=VARCHAR},
+      Route_id = #{routeId,jdbcType=INTEGER},
+      Startnode = #{startnode,jdbcType=VARCHAR},
+      Acrossnode = #{acrossnode,jdbcType=VARCHAR},
+      Endpoint = #{endpoint,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

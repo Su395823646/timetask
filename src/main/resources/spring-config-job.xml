@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans xmlns = "http://www.springframework.org/schema/beans"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	">
+						
+	<bean id = "timeTaskService" class="org.apache.myfaces.service.impl.TimeTaskServiceImpl"></bean>
+
+	<!-- 配置定时任务对象 -->
+	<bean id="timeTaskService" class="org.apache.myfaces.service.TimeTaskService"></bean>
+
+	<!-- 配置方法调用任务明细 -->
+	<bean id="taskJob"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+
+		<!-- 配置目标对象 -->
+		<property name="targetObject">
+			<ref bean="timeTaskService" />
+		</property>
+		<!-- 配置目标方法 -->
+		<property name="targetMethod">
+			<value>PrintHello</value>
+		</property>
+		<property name="concurrent">
+			<!--指定目标封装为有状态的任务，有状态的任务不能并发执行，无状态的任务可并发执行 -->
+			<value> false</value>
+		</property>
+	</bean>
+
+	<!-- 配置触发器 -->
+	<bean id="doTime"
+		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail">
+			<ref bean="taskJob" />
+		</property>
+		<!-- cron表达式，此处是每天11点52分0秒执行 -->
+		<property name="cronExpression">
+			<value> 1/5 * * * * ?</value>
+		</property>
+	</bean>
+
+	<!-- 配置调度工厂类 -->
+	<bean lazy-init="false"
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<!-- 这里添加多个定时任务触发器，对应第2步的bean id -->
+				<!-- 添加触发器 -->
+				<ref local="doTime" />
+			</list>
+		</property>
+	</bean>   
+</beans>
